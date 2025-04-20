@@ -1,0 +1,16 @@
+services:
+  valkey:
+    image: valkey/valkey:latest
+    container_name: valkey
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - vdata:/data
+    command: valkey-server --save 60 1 --loglevel notice
+
+volumes:
+  vdata:
+    driver: local
