@@ -1,0 +1,15 @@
+services:
+  changedetection:
+    image: lscr.io/linuxserver/changedetection.io:latest
+    container_name: changedetection
+    environment:
+      - PUID=${USER_ID}
+      - PGID=${USER_GROUP}
+      - TZ=Europe/Stockholm
+      #- BASE_URL=${MY_URL} #optional
+      #- PLAYWRIGHT_DRIVER_URL= #optional
+    volumes:
+      - /home/dazuki/changedetection.io:/config
+    ports:
+      - 5000:5000
+    restart: unless-stopped
