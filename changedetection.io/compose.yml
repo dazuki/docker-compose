@@ -9,7 +9,7 @@ services:
       #- BASE_URL=${MY_URL} #optional
       #- PLAYWRIGHT_DRIVER_URL= #optional
     volumes:
-      - /home/dazuki/changedetection.io:/config
+      - ./config:/config
     ports:
       - 5000:5000
     restart: unless-stopped
