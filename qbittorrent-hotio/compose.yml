@@ -24,7 +24,7 @@ services:
       - VPN_PROVIDER=proton
       - VPN_LAN_NETWORK=192.168.0.0/24
       - VPN_LAN_LEAK_ENABLED=false
-      - VPN_EXPOSE_PORTS_ON_LAN
+      - VPN_EXPOSE_PORTS_ON_LAN=8118/tcp,8118/udp
       - VPN_AUTO_PORT_FORWARD=true
       - VPN_KEEP_LOCAL_DNS=false
       - VPN_FIREWALL_TYPE=auto
