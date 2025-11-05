@@ -3,8 +3,10 @@
 
 # keep
 !compose.yml
+!docker-compose.yml
 !.env.example
 !README.md
+!init-data.sh
 !.gitignore
 
 # whitelist
