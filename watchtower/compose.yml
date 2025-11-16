@@ -1,12 +1,9 @@
 services:
   watchtower:
-    container_name: ${CONTAINER_NAME}
-    image: beatkind/watchtower
-    restart: always
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+    container_name: watchtower
+    hostname: watchtower
+    image: nickfedor/watchtower
     environment:
-      - TZ=Europe/Stockholm
       - WATCHTOWER_CLEANUP=true
       - WATCHTOWER_SCHEDULE=0 0 18 * * *
       # Email Notification
@@ -17,5 +14,37 @@ services:
       - WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PORT=${EMAIL_SERVER_PORT}
       - WATCHTOWER_NOTIFICATION_EMAIL_SERVER_USER=${EMAIL_SERVER_USER}
       - WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PASSWORD=${EMAIL_SERVER_PASSWORD}
-      - WATCHTOWER_NOTIFICATION_EMAIL_DELAY=2
       - WATCHTOWER_NOTIFICATION_EMAIL_SUBJECTTAG=${EMAIL_SUBJECTTAG}
+      - DOCKER_HOST=tcp://socket-proxy:2375
+    restart: always
+    networks:
+      - watchtower
+      - proxynet
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    working_dir: /
+    labels:
+      com.centurylinklabs.watchtower: true
+  socket-proxy:
+    image: lscr.io/linuxserver/socket-proxy:latest
+    container_name: socket-proxy-watchtower
+    environment:
+      - ALLOW_START=1
+      - ALLOW_STOP=1
+      - ALLOW_RESTARTS=1
+      - CONTAINERS=1
+      - IMAGES=1
+      - NETWORKS=1
+      - POST=1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - proxynet
+    restart: always
+    read_only: true
+    tmpfs:
+      - /run
+networks:
+  proxynet:
+    internal: true
+  watchtower: null
