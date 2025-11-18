@@ -10,3 +10,4 @@ services:
     environment:
       - DOZZLE_REMOTE_AGENT=${REMOTE_AGENT}
       - DOZZLE_ENABLE_ACTIONS=true
+      - TZ=Europe/Berlin

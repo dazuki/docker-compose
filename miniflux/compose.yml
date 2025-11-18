@@ -9,6 +9,7 @@ services:
       db:
         condition: service_healthy
     environment:
+      - TZ=Europe/Berlin
       - DATABASE_URL=${DB_URL}
       - RUN_MIGRATIONS=1
       - BASE_URL=${RSS_URL}
@@ -20,6 +21,7 @@ services:
     container_name: miniflux-postgres
     restart: always
     environment:
+      - TZ=Europe/Berlin
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}
