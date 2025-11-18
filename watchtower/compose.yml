@@ -4,6 +4,7 @@ services:
     hostname: watchtower
     image: nickfedor/watchtower
     environment:
+      - TZ=Europe/Berlin
       - WATCHTOWER_CLEANUP=true
       - WATCHTOWER_SCHEDULE=0 0 18 * * *
       # Email Notification
@@ -29,6 +30,7 @@ services:
     image: lscr.io/linuxserver/socket-proxy:latest
     container_name: socket-proxy-watchtower
     environment:
+      - TZ=Europe/Berlin
       - ALLOW_START=1
       - ALLOW_STOP=1
       - ALLOW_RESTARTS=1
@@ -38,6 +40,7 @@ services:
       - POST=1
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /etc/localtime:/etc/localtime:ro
     networks:
       - proxynet
     restart: always
@@ -47,4 +50,4 @@ services:
 networks:
   proxynet:
     internal: true
-  watchtower: null
+  watchtower: 
