@@ -11,6 +11,44 @@ services:
       - ACME_EMAIL=${EMAIL}
       - DISABLE_HTTP=true
       - GOA=true
+      - services:
+  npmplus:
+    container_name: npmplus
+    image: docker.io/zoeyvid/npmplus:latest
+    restart: always
+    network_mode: host
+    volumes:
+      - /opt/npmplus:/data
+    environment:
+      - TZ=Europe/Berlin
+      - ACME_EMAIL=${EMAIL}
+      - DISABLE_HTTP=true
+      - GOA=true
+      - GOACLA=--agent-list --real-os --double-decode --anonymize-ip --anonymize-level=1 --keep-last=7 --with-output-resolver --no-query-string
+  npmplus-caddy:
+    container_name: npmplus-caddy
+    image: docker.io/zoeyvid/npmplus:caddy
+    restart: always
+    network_mode: bridge
+    ports:
+      - 80:80
+    environment:
+      - TZ=Europe/Stockholm
+  geoipupdate:
+    container_name: npmplus-geoipupdate
+    image: ghcr.io/maxmind/geoipupdate:latest
+    restart: always
+    network_mode: bridge
+    environment:
+      - TZ=Europe/Berlin # needs to be changed
+      - GEOIPUPDATE_EDITION_IDS=GeoLite2-Country GeoLite2-City GeoLite2-ASN
+      - GEOIPUPDATE_ACCOUNT_ID=${GEOLITE_ID} # needs to be changed
+      - GEOIPUPDATE_LICENSE_KEY=${GEOLITE_KEY} # needs to be changed
+      - GEOIPUPDATE_FREQUENCY=24
+    volumes:
+      - /opt/npmplus/goaccess/geoip:/usr/share/GeoIP
+networks: {}
+
   
   npmplus-caddy:
     container_name: npmplus-caddy
