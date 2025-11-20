@@ -50,4 +50,4 @@ services:
 networks:
   proxynet:
     internal: true
-  watchtower: 
+  watchtower: null
