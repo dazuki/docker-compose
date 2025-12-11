@@ -17,7 +17,7 @@ services:
       - PUID=1000
       - PGID=1000
       - UMASK=002
-      - TZ=Europe/Stockholm
+      - TZ=Europe/Berlin
       - WEBUI_PORTS=8080/tcp,8080/udp
       - VPN_ENABLED=true
       - VPN_CONF=wg0
