@@ -10,6 +10,8 @@
 !README.md
 !init-data.sh
 !.gitignore
+!glance/**/*.yml
+!glance/**/*.css
 
 # whitelist
 !*/
