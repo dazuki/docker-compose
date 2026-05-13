@@ -13,5 +13,8 @@
 !glance/**/*.yml
 !glance/**/*.css
 
+# searxng
+!searxng/quickstart/core-config/*
+
 # whitelist
 !*/
